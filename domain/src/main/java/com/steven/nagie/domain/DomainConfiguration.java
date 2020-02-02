@@ -1,12 +1,13 @@
 package com.steven.nagie.domain;
 
 import org.flywaydb.core.Flyway;
+import org.flywaydb.core.api.configuration.FluentConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
@@ -22,10 +23,12 @@ import java.util.Properties;
 @ComponentScan(basePackages = {
     "com.steven.nagie.domain"
 })
-@EntityScan({"com.steven.nagie.schema"})
+@EnableJpaRepositories("com.steven.nagie.domain.api.repository")
 public class DomainConfiguration {
   
-  private String[] PACKAGES_TO_SCAN = {};
+  private String[] PACKAGES_TO_SCAN = {
+      "com.steven.nagie.schema.*"
+  };
   
   @Autowired
   private Environment environment;
@@ -82,11 +85,19 @@ public class DomainConfiguration {
   
   @PostConstruct
   public void migrateFlyway() {
-    Flyway.configure()
-        .dataSource(dataSource())
-        .locations("classpath:db/migration/security")
+    FluentConfiguration flyway = Flyway.configure()
+        .dataSource(dataSource());
+    
+    flyway.locations("classpath:db/migration/security")
         .schemas("security")
         .table("security_version")
+        .baselineOnMigrate(true)
+        .load()
+        .migrate();
+    
+    flyway.locations("classpath:db/migration/recipes")
+        .schemas("recipes")
+        .table("recipes_version")
         .baselineOnMigrate(true)
         .load()
         .migrate();

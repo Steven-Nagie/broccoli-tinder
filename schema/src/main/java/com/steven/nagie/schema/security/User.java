@@ -1,13 +1,20 @@
-package com.steven.nagie.schema;
+package com.steven.nagie.schema.security;
 
 import javax.persistence.*;
 
 @Entity
-@Table(schema = "broccoli_tinder")
+@Table(schema = "security")
 public class User {
   
   private Long id;
   private String username;
+  
+  public User(String username) {
+    this.username = username;
+  }
+  
+  public User() {
+  }
   
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,8 +1,12 @@
 package com.steven.nagie.domain.api.users;
 
-import java.math.BigDecimal;
+import com.steven.nagie.schema.security.User;
 
 public interface UserService {
 
-  BigDecimal multiplyByTen(BigDecimal startNumber);
+  User saveUser(User user);
+  
+  void deleteUser(Long userId);
+  
+  User findUser(Long userId);
 }

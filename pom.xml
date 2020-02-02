@@ -27,6 +27,7 @@
     <postgresql.version>9.4-1201-jdbc41</postgresql.version>
     <flyway.version>5.2.4</flyway.version>
     <javax-xml.version>2.3.0</javax-xml.version>
+    <spring-data.version>2.1.10.RELEASE</spring-data.version>
   </properties>
 
   <dependencies>
@@ -53,6 +54,16 @@
       <groupId>org.springframework</groupId>
       <artifactId>spring-orm</artifactId>
       <version>${spring-orm.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.data</groupId>
+      <artifactId>spring-data-commons</artifactId>
+      <version>${spring-data.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.data</groupId>
+      <artifactId>spring-data-jpa</artifactId>
+      <version>${spring-data.version}</version>
     </dependency>
     <dependency>
       <groupId>org.testng</groupId>
