@@ -2,9 +2,19 @@ version: '3'
 services:
   postgresdb:
     image: postgres:9.5.20-alpine
+    container_name: postgresdb
     restart: always
+    ports:
+      - '5558:5432'
+    environment:
+      - POSTGRES_USER=broccoli
+      - POSTGRES_PASSWORD=broccoli
+      - POSTGRES_DB=broccoli
+  # TODO: Fix problem with dependecy - postgres needs to be up and ready to accept connections before this happens.
   api:
     build: ./
     container_name: broccoli-tinder
+    depends_on:
+      - postgresdb
     ports:
       - "8080:8080"

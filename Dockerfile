@@ -2,6 +2,8 @@ FROM maven:3.6.3-jdk-11 AS MAVEN_TOOL_CHAIN
 COPY pom.xml /tmp/
 COPY api /tmp/api/
 COPY domain /tmp/domain/
+COPY bootstrap /tmp/bootstrap/
+COPY schema /tmp/schema/
 WORKDIR /tmp/
 RUN mvn clean install -Pdocker
 
